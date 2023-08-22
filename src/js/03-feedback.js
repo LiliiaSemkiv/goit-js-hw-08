@@ -13,11 +13,15 @@ form.addEventListener('input', throttle(onFieldInput, 500));
 form.addEventListener('submit', onFormSubmit);
 window.addEventListener('load', onLoadPage);
 
-function onFormSubmit(e){
+function onFormSubmit(e) {
     e.preventDefault();
-    console.log(formData);
-    form.reset();
-    localStorage.removeItem(STORAGE_KEY);
+    
+    if (formData.email.trim() !== "" && formData.message.trim() !== "") {
+        console.log(formData);
+        form.reset();
+        localStorage.removeItem(STORAGE_KEY);
+        clearFormData();
+    }
 }
 
 function onFieldInput(e) {
@@ -35,4 +39,9 @@ function onLoadPage() {
         formData.email = returnData.email;
         formData.message = returnData.message;
     }
+}
+
+function clearFormData() {
+    formData.email = "";
+    formData.message = "";
 }
